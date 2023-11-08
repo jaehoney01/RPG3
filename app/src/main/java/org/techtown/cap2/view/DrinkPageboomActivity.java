@@ -294,6 +294,16 @@ public class DrinkPageboomActivity extends AppCompatActivity {
         btn=findViewById(R.id.roul);
         btn.setOnClickListener(v -> {
 
+            if(num1 == null) {
+                num1 = "0";
+            }
+            if(num2 == null) {
+                num2 = "0";
+            }
+            if(num3 == null) {
+                num3 = "0";
+            }
+
             sendDataToBluetooth(num1,num2,num3);
             Log.d("TAG", "전송된 데이터: " + num1);
             Log.d("TAG", "전송된 데이터: " + num2);
