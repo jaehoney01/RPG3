@@ -196,13 +196,25 @@ public class Drink2Activity extends AppCompatActivity {
         roul=findViewById(R.id.roul);
         roul.setOnClickListener(v -> {
 
-            sendDataToBluetooth(num1,num2,num3);
-            Log.d("TAG", "전송된 데이터: " + num1);
-            Log.d("TAG", "전송된 데이터: " + num2);
-            Log.d("TAG", "전송된 데이터: " + num3);
+//            sendDataToBluetooth(num1,num2,num3);
+//            Log.d("TAG", "전송된 데이터: " + num1);
+//            Log.d("TAG", "전송된 데이터: " + num2);
+//            Log.d("TAG", "전송된 데이터: " + num3);
 
 
             Intent iintent = new Intent(this, RouletteActivity.class);
+            if(num1 == null) {
+                num1 = "0";
+            }
+            if(num2 == null) {
+                num2 = "0";
+            }
+            if(num3 == null) {
+                num3 = "0";
+            }
+            iintent.putExtra("num1",num1);
+            iintent.putExtra("num2",num2);
+            iintent.putExtra("num3",num3);
             startActivity(iintent);
 
         });

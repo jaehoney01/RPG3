@@ -33,32 +33,35 @@ import java.util.Random;
 
 public class RouletteActivity extends AppCompatActivity {
     private LuckyWheel luckyWheel;
-    private String message1,message2,message3;
+    private String message1, message2, message3;
     private List<WheelItem> wheelItems;
     private BluetoothThread bluetoothThread;
 
-    private String money;
     Context context;
 
     private String[] colors = {"#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FFA500", "#800080", "#FFC0CB", "#808080", "#000000", "#FFC0CB"};
     private String[] animals = {"강아지", "고양이", "사자", "기린", "호랑이", "팬더", "드래곤", "토끼", "오리", "돼지"};
-    public RouletteActivity() {
-        // BluetoothThread 인스턴스를 가져옴
-        bluetoothThread = BluetoothThread.getInstance(this);
-    }
 
     public void sendDataToBluetooth2(String message1) {
         // BluetoothThread 객체의 sendData 메서드 호출
         bluetoothThread.sendData2(message1);
     }
+
     public void sendDataToBluetooth3(String message1, String message2, String message3, String message4) {
         // BluetoothThread 객체의 sendData 메서드 호출
-        bluetoothThread.sendData3(message1, message2, message3,message4);
+        bluetoothThread.sendData3(message1, message2, message3, message4);
     }
+
     public void sendDataToBluetooth(String message1, String message2, String message3) {
         // BluetoothThread 객체의 sendData 메서드 호출
         bluetoothThread.sendData(message1, message2, message3);
     }
+
+    public void sendDataToBluetooth4(String message1, String message2, String message3, String message4) {
+        // BluetoothThread 객체의 sendData 메서드 호출
+        bluetoothThread.sendData3(message1, message2, message3, message4);
+    }
+
     String point;
 
     // AlertDialog 및 AlertDialog.Builder 객체를 클래스 멤버로 선언
@@ -129,7 +132,6 @@ public class RouletteActivity extends AppCompatActivity {
                     Bitmap bitmap = drawableToBitmap(d);
 
 
-
                     // count가 colors와 animals 배열 길이를 초과하지 않도록 수정
                     int maxCount = Math.min(count, Math.min(colors.length, animals.length));
                     for (int i = 0; i < maxCount; i++) {
@@ -166,13 +168,6 @@ public class RouletteActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
     private boolean isValidNumber(String inputText) {
         // 입력값이 비어있지 않고, 숫자로 변환 가능한 경우에만 true를 반환합니다.
         return !inputText.isEmpty() && inputText.matches("\\d+");
@@ -196,9 +191,11 @@ public class RouletteActivity extends AppCompatActivity {
 
         luckyWheel.addWheelItems(wheelItems);
     }
+
     private void showToast(String message) {
         Toast.makeText(RouletteActivity.this, message, Toast.LENGTH_LONG).show();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,26 +229,66 @@ public class RouletteActivity extends AppCompatActivity {
         });
 
 
-        Random random = new Random();
-        int num1 = random.nextInt(6); // Generates a random number between 0 and 5
-        int num2 = random.nextInt(Math.max(0, 10 - num1 - 4)); // Generates a random number between 0 and (10 - num1 - 4)
-        int num3 = 10 - num1 - num2;
+        if (getIntent().hasExtra("num1") && getIntent().hasExtra("num2") && getIntent().hasExtra("num3")) {
+            message1 = getIntent().getStringExtra("num1");
+            message2 = getIntent().getStringExtra("num2");
+            message3 = getIntent().getStringExtra("num3");
+        } else {
+            Random random = new Random();
+            int num1 = random.nextInt(10); // Generates a random number between 0 and 5
+            int num2 = random.nextInt(10 - num1); // Generates a random number between 0 and (10 - num1 - 4)
+            int num3 = 10 - num1 - num2;
 
-        if (num3 < 0) {
-            num1 = 0;
-            num2 = 0;
-            num3 = 0;
+            int numrandom3 = random.nextInt(3);
+
+            if (numrandom3 == 0) {
+                message1 = String.valueOf(num1);
+                message2 = String.valueOf(num2);
+                message3 = String.valueOf(num3);
+            } else if (numrandom3 == 1) {
+                message1 = String.valueOf(num2);
+                message2 = String.valueOf(num1);
+                message3 = String.valueOf(num3);
+            } else {
+                message1 = String.valueOf(num3);
+                message2 = String.valueOf(num1);
+                message3 = String.valueOf(num2);
+            }
         }
-        message1 = String.valueOf(num1);
-        message2 = String.valueOf(num2);
-        message3 = String.valueOf(num3);
 
         Button start = findViewById(R.id.spin_btn);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendDataToBluetooth(message1, message2, message3);
-                sendDataToBluetooth2("t");
+                if (getIntent().hasExtra("num1") && getIntent().hasExtra("num2") && getIntent().hasExtra("num3")) {
+                    message1 = getIntent().getStringExtra("num1");
+                    message2 = getIntent().getStringExtra("num2");
+                    message3 = getIntent().getStringExtra("num3");
+                } else {
+                    Random random = new Random();
+                    int num1 = random.nextInt(10); // Generates a random number between 0 and 5
+                    int num2 = random.nextInt(10 - num1); // Generates a random number between 0 and (10 - num1 - 4)
+                    int num3 = 10 - num1 - num2;
+
+                    int numrandom3 = random.nextInt(3);
+
+                    if (numrandom3 == 0) {
+                        message1 = String.valueOf(num1);
+                        message2 = String.valueOf(num2);
+                        message3 = String.valueOf(num3);
+                    } else if (numrandom3 == 1) {
+                        message1 = String.valueOf(num2);
+                        message2 = String.valueOf(num1);
+                        message3 = String.valueOf(num3);
+                    } else {
+                        message1 = String.valueOf(num3);
+                        message2 = String.valueOf(num1);
+                        message3 = String.valueOf(num2);
+                    }
+
+                }
+
+                sendDataToBluetooth4(message1, message2, message3, "t");
                 Random random = new Random();
                 point = String.valueOf(random.nextInt(6) + 1);
                 Log.d("Debug", "Random point: " + point); // 디버깅 로그
@@ -266,14 +303,8 @@ public class RouletteActivity extends AppCompatActivity {
                 Log.d("Debug", "onReachTarget called"); // 디버깅 로그
 
                 // 랜덤 포인트를 사용하여 해당 포인트의 당첨자만을 표시
-                int index = Integer.parseInt(point)-1;
-                if (index >= 0 && index < wheelItems.size()) {
-                    WheelItem wheelItem = wheelItems.get(index);
-                    money = wheelItem.text;
-                    showWinnerDialog(animals[index]);
-
-                }
-
+                int index = Integer.parseInt(point) - 1;
+                showWinnerDialog(animals[index]);
             }
         });
 
@@ -283,16 +314,15 @@ public class RouletteActivity extends AppCompatActivity {
     }
 
 
-
-
     /**
      * drawable -> bitmap
+     *
      * @param drawable drawable
      * @return
      */
     public static Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable)drawable).getBitmap();
+            return ((BitmapDrawable) drawable).getBitmap();
         }
 
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
@@ -304,6 +334,9 @@ public class RouletteActivity extends AppCompatActivity {
     }
 
     private void showWinnerDialog(String winnerName) {
+        if (RouletteActivity.this.isFinishing()) {
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("축하합니다!")
                 .setMessage("축하합니다! " + winnerName + "님!!!")
@@ -311,7 +344,6 @@ public class RouletteActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sendDataToBluetooth2("g");
-
                         dialog.dismiss();
                     }
                 });

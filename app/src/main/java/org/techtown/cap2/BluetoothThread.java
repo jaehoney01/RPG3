@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.UUID;
 
 
@@ -135,6 +136,7 @@ public class BluetoothThread extends Thread {
             try {
                 String message = message1 + "," + message2 + "," + message3;
                 byte[] messageBytes = message.getBytes();
+                System.out.print(messageBytes);
                 outputStream.write(messageBytes);
                 Log.d(TAG, "Sent data: " + message);
             } catch (IOException e) {
