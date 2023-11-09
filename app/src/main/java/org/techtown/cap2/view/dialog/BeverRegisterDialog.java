@@ -75,6 +75,7 @@ public class BeverRegisterDialog extends Dialog {
         adapter.addItem("토마토주스");
         adapter.addItem("레스비");
         adapter.addItem("봉봉");
+        adapter.addItem("아침햇쌀");
         gridView.setAdapter(adapter);
 
     }
