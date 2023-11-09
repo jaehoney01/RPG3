@@ -21,8 +21,9 @@ public class Const {
                     new BeverRecipe(new String[]{"소주","레스비"}, new int[]{1,2}),
                     new BeverRecipe(new String[]{"소주","맥주", "사이다"}, new int[]{1,2,2}),
                     new BeverRecipe(new String[]{"소주","봉봉", "사이다"}, new int[]{1,1,3}),
-                    new BeverRecipe(new String[]{"소주","막걸리", "사이다"}, new int[]{1,1,1})
-                    
+                    new BeverRecipe(new String[]{"소주","막걸리", "사이다"}, new int[]{1,1,1}),
+                    new BeverRecipe(new String[]{"소주","아침햇쌀", "사이다"}, new int[]{1,1,2})
+
                     
             )
     );
