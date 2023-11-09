@@ -74,7 +74,7 @@ public class BoomGame_setting extends AppCompatActivity {
             public void onClick(View v) {
                 Random random = new Random();
                 //int num1 = random.nextInt(count) + 1;
-                sendDataToBluetooth3("-1", "0", "0", String.valueOf(count));
+                sendDataToBluetooth3("0", "0", "0", String.valueOf(count));
                 Intent intent = new Intent(BoomGame_setting.this, BoomGameActivity.class);
                 startActivity(intent);
             }

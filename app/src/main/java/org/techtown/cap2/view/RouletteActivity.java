@@ -67,13 +67,14 @@ public class RouletteActivity extends AppCompatActivity {
     // AlertDialog 및 AlertDialog.Builder 객체를 클래스 멤버로 선언
     private AlertDialog alertDialog;
     private AlertDialog.Builder ad;
+    private EditText input;
 
     private void setupPlayerCountDialog() {
         ad = new AlertDialog.Builder(RouletteActivity.this);
         ad.setIcon(R.drawable.roulette5);
         ad.setTitle("룰렛 인원 설정 2 ~ 10 사이에 값만 입력해주세요 \n (영어,한글,특수문자는 입력 시 작동이 안됩니다.");
         ad.setMessage("참여하는 인원을 적어주세요.");
-        final EditText input = new EditText(RouletteActivity.this);
+        input = new EditText(RouletteActivity.this);
         ad.setView(input);
         ad.setCancelable(false);
 
@@ -288,9 +289,9 @@ public class RouletteActivity extends AppCompatActivity {
 
                 }
 
-                sendDataToBluetooth4(message1, message2, message3, "t");
+                sendDataToBluetooth(message1, message2, message3);
                 Random random = new Random();
-                point = String.valueOf(random.nextInt(6) + 1);
+                point = String.valueOf(random.nextInt(Integer.parseInt(String.valueOf(input.getText()))) + 1);
                 Log.d("Debug", "Random point: " + point); // 디버깅 로그
 
                 luckyWheel.rotateWheelTo(Integer.parseInt(point));
@@ -304,7 +305,7 @@ public class RouletteActivity extends AppCompatActivity {
 
                 // 랜덤 포인트를 사용하여 해당 포인트의 당첨자만을 표시
                 int index = Integer.parseInt(point) - 1;
-                showWinnerDialog(animals[index]);
+                //showWinnerDialog(animals[index]);
             }
         });
 
